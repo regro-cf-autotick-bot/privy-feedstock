@@ -7,24 +7,26 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/py2.py3/{{ name[0] }}/{{ name }}/{{ fn }}
+  url: https://pypi.org/packages/py2.py3/{{ name[0] }}/{{ name }}/{{ fn }}
   sha256: e68679bb4006ce83206d9a7af1158cf4d56a2ed6861ee39276907be618dfb8d9
 
 build:
   noarch: python
-  number: 0
+  number: 1
   script: "{{ PYTHON }} -m pip install -vvv {{ fn }}"
 
 requirements:
   host:
-    - python
+    - python {{ python_min }}
     - pip
   run:
-    - python
+    - python >={{ python_min }}
     - cryptography
     - argon2_cffi
 
 test:
+  requires:
+    - python {{ python_min }}
   imports:
     - privy
 
